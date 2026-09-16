@@ -892,7 +892,7 @@
 <!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></s
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
   
    <script>
@@ -1217,6 +1217,108 @@ function renderMyIdeas() {
 
 
   const saved =
-    JSON.parse(
-      localStorage.getItem('neoIdeas') || '[]'
-    '
+  JSON.parse(
+    localStorage.getItem('neoIdeas') || '[]'
+  );
+
+  if (saved.length === 0) {
+    box.innerHTML = `
+      <p class="muted" style="margin-top:15px;">
+        No ideas submitted yet.
+      </p>
+    `;
+    return;
+  }
+
+  box.innerHTML = saved.map((idea, index) => `
+    <div class="card" style="margin-top:12px;">
+      <div class="cardtop">
+        <span class="tag">${idea.category}</span>
+        <span class="muted">${idea.date}</span>
+      </div>
+
+      <h3>${idea.title}</h3>
+
+      <p>${idea.description}</p>
+
+      <div class="facts">
+        <div class="fact">
+          Investment
+          <b>${idea.investment}</b>
+        </div>
+
+        <div class="fact">
+          Asking Price
+          <b>${idea.price}</b>
+        </div>
+      </div>
+
+      <p class="muted">
+        Contact: ${idea.contact}
+      </p>
+    </div>
+  `).join('');
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function setupSearch() {
+
+  const homeSearch =
+    document.getElementById('homeSearch');
+
+  const exploreSearch =
+    document.getElementById('exploreSearch');
+
+  if (homeSearch) {
+    homeSearch.addEventListener('input', function() {
+
+      const q = this.value.toLowerCase().trim();
+
+      const filtered = ideas.filter(i =>
+        i.name.toLowerCase().includes(q) ||
+        i.cat.toLowerCase().includes(q)
+      );
+
+      const homecards =
+        document.getElementById('homecards');
+
+      if (homecards) {
+        homecards.innerHTML =
+          filtered.slice(0, 3).map(card).join('');
+      }
+
+    });
+  }
+
+  if (exploreSearch) {
+    exploreSearch.addEventListener('input', function() {
+
+      const q = this.value.toLowerCase().trim();
+
+      const filtered = ideas.filter(i =>
+        i.name.toLowerCase().includes(q) ||
+        i.cat.toLowerCase().includes(q)
+      );
+
+      render(filtered);
+
+    });
+  }
+}
+
+
+/* =========================
+   START APP
+========================= */
+
+render();
+setupSearch();
+
+</script>
+
+</body>
+</html>
