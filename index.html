@@ -344,6 +344,26 @@ window.addEventListener('appinstalled', ()=>{
 if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 }
-render();
+render();<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC6KPzRqNHHgtr5FW0TI3A7TjmGTbhARsI",
+  authDomain: "neo-ideas.firebaseapp.com",
+  projectId: "neo-ideas",
+  storageBucket: "neo-ideas.firebasestorage.app",
+  messagingSenderId: "886685449543",
+  appId: "1:886685449543:web:89b14aede5e56b570d2062",
+  measurementId: "G-X79F34QT4S"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+</script>
 </script>
 </body></html>
