@@ -1,109 +1,661 @@
 <!doctype html>
 <html lang="en">
-<head> <meta name="google-site-verification" content="balfDbnSYyC3ffHuXsGoc0ejnswzF8sGEHMKedfdmoE" />
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#06111b">
-<meta name="description" content="Neo-Ideas — discover and sell practical business ideas.">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-192.png">
-<title>Neo-Ideas — Premium Prototype</title>
-<style>
-:root{--bg:#06111b;--panel:#0b1b29;--panel2:#102437;--gold:#f6c64b;--text:#f7f9fb;--muted:#91a3b4;--line:#1d3447;--green:#49d69a}
-*{box-sizing:border-box}body{margin:0;background:#020910;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
-.phone{max-width:430px;min-height:100vh;margin:auto;background:radial-gradient(circle at 80% 0,#15344a 0,#06111b 35%,#06111b 100%);padding-bottom:90px}
-header{padding:22px 18px 10px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:21px;font-weight:800}.logo span{color:var(--gold)}
-.icon{font-size:22px}.search{margin:10px 16px;background:#0d2131;border:1px solid var(--line);border-radius:14px;padding:13px;color:var(--muted)}
-.hero{margin:14px 16px;border-radius:22px;padding:24px 20px;background:linear-gradient(135deg,#102d40,#17293a);border:1px solid #28465c;box-shadow:0 18px 50px #0007}
-.hero h1{font-size:29px;line-height:1.05;margin:0 0 10px}.hero p{color:#b5c3ce;margin:0 0 18px}.btn{display:inline-block;background:var(--gold);color:#111;font-weight:800;border:0;border-radius:12px;padding:12px 17px;cursor:pointer}
-.section{padding:8px 16px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:14px 0;font-weight:800}.muted{color:var(--muted);font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.cat{padding:16px 8px;border-radius:16px;background:var(--panel);border:1px solid var(--line);text-align:center;font-size:12px}.cat b{display:block;font-size:24px;margin-bottom:8px}
-.cards{display:grid;gap:10px}.card{background:linear-gradient(145deg,#0c1d2b,#0a1723);border:1px solid var(--line);border-radius:17px;padding:14px}.cardtop{display:flex;justify-content:space-between;gap:10px}.tag{color:#111;background:var(--gold);border-radius:7px;padding:4px 7px;font-size:10px;font-weight:800}.price{font-size:18px;font-weight:900}.card h3{margin:9px 0 5px}.card p{margin:0;color:var(--muted);font-size:12px}
-.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(430px,100%);height:72px;background:#071522f5;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;backdrop-filter:blur(14px)}.nav{color:var(--muted);font-size:11px;text-align:center;cursor:pointer}.nav.active{color:var(--gold)}.nav span{display:block;font-size:21px;margin-bottom:3px}
-.page{display:none}.page.active{display:block}.back{padding:15px 18px;color:var(--muted);cursor:pointer}
-.detail{margin:8px 16px}.detailbox{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px}.detail h1{margin:10px 0}.facts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0}.fact{background:#081724;border:1px solid var(--line);border-radius:12px;padding:12px}.fact b{display:block;margin-top:4px}.wide{width:100%;margin-top:10px}
-.premium{margin:22px 16px;background:linear-gradient(145deg,#211b0b,#0d1822);border:1px solid #6d5620;border-radius:24px;padding:24px;text-align:center}.crown{font-size:45px}.premium h1{margin:8px}.premium li{text-align:left;margin:12px 0;color:#c6d1da}.premium ul{padding-left:20px}
-.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:#152a3b;border:1px solid #31516a;padding:11px 15px;border-radius:12px;display:none;font-size:13px}
-.forminput{
-  width:100%;
-  margin:7px 0 16px;
-  padding:13px;
-  background:#081724;
-  color:var(--text);
-  border:1px solid var(--line);
-  border-radius:12px;
-  outline:none;
-  font:inherit;
-}
+<head>
+  <meta name="google-site-verification" content="balfDbnSYyC3ffHuXsGoc0ejnswzF8sGEHMKedfdmoE" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#06111b">
+  <meta name="description" content="Neo-Ideas — discover and sell practical business ideas.">
 
-textarea.forminput{
-  min-height:120px;
-  resize:vertical;
-}
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
 
-select.forminput{
-  appearance:auto;
-}
+  <title>Neo-Ideas — Premium Prototype</title>
 
-.forminput:focus{
-  border-color:var(--gold);
-  }</style>
+  <style>
+    :root{
+      --bg:#06111b;
+      --panel:#0b1b29;
+      --panel2:#102437;
+      --gold:#f6c64b;
+      --text:#f7f9fb;
+      --muted:#91a3b4;
+      --line:#1d3447;
+      --green:#49d69a;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:#020910;
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;
+    }
+
+    button,input,textarea,select{
+      font-family:inherit;
+    }
+
+    .phone{
+      max-width:430px;
+      min-height:100vh;
+      margin:auto;
+      background:radial-gradient(circle at 80% 0,#15344a 0,#06111b 35%,#06111b 100%);
+      padding-bottom:90px;
+    }
+
+    header{
+      padding:22px 18px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .logo{
+      font-size:21px;
+      font-weight:800;
+    }
+
+    .logo span{
+      color:var(--gold);
+    }
+
+    .search{
+      margin:10px 16px;
+      background:#0d2131;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:13px;
+      color:var(--muted);
+    }
+
+    .search input{
+      width:100%;
+      background:transparent;
+      border:0;
+      outline:0;
+      color:var(--text);
+      font:inherit;
+    }
+
+    .hero{
+      margin:14px 16px;
+      border-radius:22px;
+      padding:24px 20px;
+      background:linear-gradient(135deg,#102d40,#17293a);
+      border:1px solid #28465c;
+      box-shadow:0 18px 50px #0007;
+    }
+
+    .hero h1{
+      font-size:29px;
+      line-height:1.05;
+      margin:0 0 10px;
+    }
+
+    .hero p{
+      color:#b5c3ce;
+      margin:0 0 18px;
+    }
+
+    .btn{
+      display:inline-block;
+      background:var(--gold);
+      color:#111;
+      font-weight:800;
+      border:0;
+      border-radius:12px;
+      padding:12px 17px;
+      cursor:pointer;
+    }
+
+    .btn:active{
+      transform:scale(.98);
+    }
+
+    .section{
+      padding:8px 16px;
+    }
+
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin:14px 0;
+      font-weight:800;
+    }
+
+    .muted{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:9px;
+    }
+
+    .cat{
+      padding:16px 8px;
+      border-radius:16px;
+      background:var(--panel);
+      border:1px solid var(--line);
+      text-align:center;
+      font-size:12px;
+      cursor:pointer;
+    }
+
+    .cat:active{
+      transform:scale(.97);
+    }
+
+    .cat b{
+      display:block;
+      font-size:24px;
+      margin-bottom:8px;
+    }
+
+    .cards{
+      display:grid;
+      gap:10px;
+    }
+
+    .card{
+      background:linear-gradient(145deg,#0c1d2b,#0a1723);
+      border:1px solid var(--line);
+      border-radius:17px;
+      padding:14px;
+    }
+
+    .clickable{
+      cursor:pointer;
+    }
+
+    .clickable:active{
+      transform:scale(.99);
+    }
+
+    .cardtop{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .tag{
+      color:#111;
+      background:var(--gold);
+      border-radius:7px;
+      padding:4px 7px;
+      font-size:10px;
+      font-weight:800;
+    }
+
+    .price{
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .card h3{
+      margin:9px 0 5px;
+    }
+
+    .card p{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .bottom{
+      position:fixed;
+      bottom:0;
+      left:50%;
+      transform:translateX(-50%);
+      width:min(430px,100%);
+      height:72px;
+      background:#071522f5;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-around;
+      align-items:center;
+      backdrop-filter:blur(14px);
+      z-index:100;
+    }
+
+    .nav{
+      color:var(--muted);
+      font-size:11px;
+      text-align:center;
+      cursor:pointer;
+      padding:5px 8px;
+    }
+
+    .nav.active{
+      color:var(--gold);
+    }
+
+    .nav span{
+      display:block;
+      font-size:21px;
+      margin-bottom:3px;
+    }
+
+    .page{
+      display:none;
+    }
+
+    .page.active{
+      display:block;
+    }
+
+    .back{
+      padding:15px 18px;
+      color:var(--muted);
+      cursor:pointer;
+    }
+
+    .detail{
+      margin:8px 16px;
+    }
+
+    .detailbox{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+    }
+
+    .detail h1{
+      margin:10px 0;
+    }
+
+    .facts{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:9px;
+      margin:16px 0;
+    }
+
+    .fact{
+      background:#081724;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+    }
+
+    .fact b{
+      display:block;
+      margin-top:4px;
+    }
+
+    .wide{
+      width:100%;
+      margin-top:10px;
+    }
+
+    .premium{
+      margin:22px 16px;
+      background:linear-gradient(145deg,#211b0b,#0d1822);
+      border:1px solid #6d5620;
+      border-radius:24px;
+      padding:24px;
+      text-align:center;
+    }
+
+    .crown{
+      font-size:45px;
+    }
+
+    .premium h1{
+      margin:8px;
+    }
+
+    .premium li{
+      text-align:left;
+      margin:12px 0;
+      color:#c6d1da;
+    }
+
+    .premium ul{
+      padding-left:20px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:84px;
+      transform:translateX(-50%);
+      background:#152a3b;
+      border:1px solid #31516a;
+      padding:11px 15px;
+      border-radius:12px;
+      display:none;
+      font-size:13px;
+      z-index:200;
+      max-width:90%;
+      text-align:center;
+    }
+
+    .forminput{
+      width:100%;
+      margin:7px 0 16px;
+      padding:13px;
+      background:#081724;
+      color:var(--text);
+      border:1px solid var(--line);
+      border-radius:12px;
+      outline:none;
+      font:inherit;
+    }
+
+    textarea.forminput{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    select.forminput{
+      appearance:auto;
+    }
+
+    .forminput:focus{
+      border-color:var(--gold);
+    }
+
+    .profile-option{
+      cursor:pointer;
+    }
+
+    .profile-option:active{
+      transform:scale(.99);
+    }
+  </style>
 </head>
+
 <body>
+
 <div class="phone">
+
+  <!-- HOME -->
   <div id="home" class="page active">
-    <header><div class="logo">💡 Neo-<span>Ideas</span></div><button id="installBtn" class="btn" style="padding:8px 10px;font-size:11px;display:none">Install</button></header>
-    <div class="search" role="search"><input id="homeSearch" aria-label="Search ideas" placeholder="⌕  Search ideas, categories, keywords..." style="width:100%;background:transparent;border:0;outline:0;color:var(--text);font:inherit"></div>
-    <div class="hero"><h1>Turn Ideas<br>Into <span style="color:var(--gold)">Income.</span></h1><p>Discover business ideas, plans and opportunities built for real-world action.</p><button class="btn" onclick="show('explore')">Explore Ideas →</button></div>
-    <div class="section"><div class="section-title">Popular Categories <span class="muted">View all</span></div><div class="grid">
-      <div class="cat" onclick="filter('Food')"><b>🍔</b>Food</div><div class="cat" onclick="filter('Automobile')"><b>🚗</b>Automobile</div><div class="cat" onclick="filter('Technology')"><b>💻</b>Technology</div>
-      <div class="cat" onclick="filter('Retail')"><b>🛍️</b>Retail</div><div class="cat" onclick="filter('Manufacturing')"><b>🏭</b>Manufacturing</div><div class="cat" onclick="filter('Services')"><b>🏠</b>Services</div>
-      <div class="cat" onclick="filter('Education')"><b>📚</b>Education</div><div class="cat" onclick="filter('Agriculture')"><b>🌱</b>Agriculture</div><div class="cat" onclick="filter('Investment')"><b>📈</b>Investment</div>
-    </div></div>
-    <div class="section"><div class="section-title">Trending Ideas <span class="muted">See more</span></div><div id="homecards" class="cards"></div></div>
-  </div>
-
-  <div id="explore" class="page">
-    <div class="back" onclick="show('home')">← Back</div><header><div class="logo">Explore <span>Ideas</span></div><div>⚙</div></header>
-    <div class="search" role="search"><input id="exploreSearch" aria-label="Search ideas" placeholder="⌕  Search ideas..." style="width:100%;background:transparent;border:0;outline:0;color:var(--text);font:inherit"></div><div class="section"><div id="cards" class="cards"></div></div>
-  </div>
-
-  <div id="detail" class="page">
-    <div class="back" onclick="show('explore')">← Back</div>
-    <div class="detail"><div class="detailbox"><span class="tag">FOOD & BEVERAGE</span><h1>Small Cloud Kitchen Setup</h1><p class="muted">A compact food business concept designed for a small starting budget.</p>
-    <div class="facts"><div class="fact">Investment<b>₹1.2L approx.</b></div><div class="fact">Idea price<b>₹149</b></div><div class="fact">Difficulty<b>Medium</b></div><div class="fact">Setup<b>1–3 months</b></div></div>
-    <h3>What you'll get</h3><p class="muted">Detailed business plan · Setup checklist · Marketing approach · Cost structure · Example 12-month projection</p>
-    <button class="btn wide" onclick="buy()">Buy Idea — ₹149</button></div></div>
-  </div>
-
-  <div id="premium" class="page">
-    <div class="back" onclick="show('home')">← Back</div>
-    <div class="premium"><div class="crown">♛</div><h1>Neo-Ideas Premium</h1><p class="muted">Unlock more opportunities and marketplace features.</p><h2>₹99 / month</h2>
-    <ul><li>Access premium ideas</li><li>Advanced filters up to ₹2L starting investment</li><li>Detailed business plans</li><li>Save & track ideas</li><li>Seller analytics</li></ul><button class="btn wide" onclick="subscribe()">Subscribe Now</button></div>
-  </div>
-
-    <div id="sell" class="page">
-    <div class="back" onclick="show('home')">← Back</div>
 
     <header>
-      <div class="logo">Sell <span>Idea</span></div>
+      <div class="logo">💡 Neo-<span>Ideas</span></div>
+
+      <button
+        id="installBtn"
+        class="btn"
+        style="padding:8px 10px;font-size:11px;display:none">
+        Install
+      </button>
+    </header>
+
+    <div class="search">
+      <input
+        id="homeSearch"
+        aria-label="Search ideas"
+        placeholder="⌕  Search ideas, categories, keywords...">
+    </div>
+
+    <div class="hero">
+      <h1>
+        Turn Ideas<br>
+        Into <span style="color:var(--gold)">Income.</span>
+      </h1>
+
+      <p>
+        Discover business ideas, plans and opportunities built for real-world action.
+      </p>
+
+      <button class="btn" onclick="show('explore')">
+        Explore Ideas →
+      </button>
+    </div>
+
+    <div class="section">
+
+      <div class="section-title">
+        Popular Categories
+        <span class="muted">View all</span>
+      </div>
+
+      <div class="grid">
+
+        <div class="cat" onclick="filter('Food')">
+          <b>🍔</b>Food
+        </div>
+
+        <div class="cat" onclick="filter('Automobile')">
+          <b>🚗</b>Automobile
+        </div>
+
+        <div class="cat" onclick="filter('Technology')">
+          <b>💻</b>Technology
+        </div>
+
+        <div class="cat" onclick="filter('Retail')">
+          <b>🛍️</b>Retail
+        </div>
+
+        <div class="cat" onclick="filter('Manufacturing')">
+          <b>🏭</b>Manufacturing
+        </div>
+
+        <div class="cat" onclick="filter('Services')">
+          <b>🏠</b>Services
+        </div>
+
+        <div class="cat" onclick="filter('Education')">
+          <b>📚</b>Education
+        </div>
+
+        <div class="cat" onclick="filter('Agriculture')">
+          <b>🌱</b>Agriculture
+        </div>
+
+        <div class="cat" onclick="filter('Investment')">
+          <b>📈</b>Investment
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+
+      <div class="section-title">
+        Trending Ideas
+        <span class="muted">See more</span>
+      </div>
+
+      <div id="homecards" class="cards"></div>
+
+    </div>
+  </div>
+
+
+  <!-- EXPLORE -->
+  <div id="explore" class="page">
+
+    <div class="back" onclick="show('home')">
+      ← Back
+    </div>
+
+    <header>
+      <div class="logo">
+        Explore <span>Ideas</span>
+      </div>
+      <div>⚙</div>
+    </header>
+
+    <div class="search">
+      <input
+        id="exploreSearch"
+        aria-label="Search ideas"
+        placeholder="⌕  Search ideas...">
+    </div>
+
+    <div class="section">
+      <div id="cards" class="cards"></div>
+    </div>
+
+  </div>
+
+
+  <!-- DETAIL -->
+  <div id="detail" class="page">
+
+    <div class="back" onclick="show('explore')">
+      ← Back
+    </div>
+
+    <div class="detail">
+
+      <div class="detailbox">
+
+        <span class="tag">
+          FOOD & BEVERAGE
+        </span>
+
+        <h1>
+          Small Cloud Kitchen Setup
+        </h1>
+
+        <p class="muted">
+          A compact food business concept designed for a small starting budget.
+        </p>
+
+        <div class="facts">
+
+          <div class="fact">
+            Investment
+            <b>₹1.2L approx.</b>
+          </div>
+
+          <div class="fact">
+            Idea price
+            <b>₹149</b>
+          </div>
+
+          <div class="fact">
+            Difficulty
+            <b>Medium</b>
+          </div>
+
+          <div class="fact">
+            Setup
+            <b>1–3 months</b>
+          </div>
+
+        </div>
+
+        <h3>
+          What you'll get
+        </h3>
+
+        <p class="muted">
+          Detailed business plan · Setup checklist · Marketing approach ·
+          Cost structure · Example 12-month projection
+        </p>
+
+        <button class="btn wide" onclick="buy()">
+          Buy Idea — ₹149
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- PREMIUM -->
+  <div id="premium" class="page">
+
+    <div class="back" onclick="show('home')">
+      ← Back
+    </div>
+
+    <div class="premium">
+
+      <div class="crown">
+        ♛
+      </div>
+
+      <h1>
+        Neo-Ideas Premium
+      </h1>
+
+      <p class="muted">
+        Unlock more opportunities and marketplace features.
+      </p>
+
+      <h2>
+        ₹99 / month
+      </h2>
+
+      <ul>
+        <li>Access premium ideas</li>
+        <li>Advanced filters up to ₹2L starting investment</li>
+        <li>Detailed business plans</li>
+        <li>Save & track ideas</li>
+        <li>Seller analytics</li>
+      </ul>
+
+      <button class="btn wide" onclick="subscribe()">
+        Subscribe Now
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- SELL IDEA -->
+  <div id="sell" class="page">
+
+    <div class="back" onclick="show('home')">
+      ← Back
+    </div>
+
+    <header>
+      <div class="logo">
+        Sell <span>Idea</span>
+      </div>
     </header>
 
     <div class="section">
+
       <div class="card">
-        <h2>💡 Submit Your Idea</h2>
+
+        <h2>
+          💡 Submit Your Idea
+        </h2>
+
         <p class="muted">
-          Have a practical business idea? Submit it to Neo-Ideas marketplace.
+          Have a practical business idea?
+          Submit it to Neo-Ideas marketplace.
         </p>
 
-        <label class="muted">Idea Title</label>
-        <input id="ideaTitle" class="forminput"
+        <label class="muted">
+          Idea Title
+        </label>
+
+        <input
+          id="ideaTitle"
+          class="forminput"
           placeholder="e.g. Mobile Car Wash Service">
 
-        <label class="muted">Category</label>
-        <select id="ideaCategory" class="forminput">
-          <option value="">Select category</option>
+
+        <label class="muted">
+          Category
+        </label>
+
+        <select
+          id="ideaCategory"
+          class="forminput">
+
+          <option value="">
+            Select category
+          </option>
+
           <option>Food</option>
           <option>Automobile</option>
           <option>Technology</option>
@@ -113,251 +665,459 @@ select.forminput{
           <option>Education</option>
           <option>Agriculture</option>
           <option>Investment</option>
+
         </select>
 
-        <label class="muted">Describe Your Idea</label>
-        <textarea id="ideaDescription" class="forminput"
+
+        <label class="muted">
+          Describe Your Idea
+        </label>
+
+        <textarea
+          id="ideaDescription"
+          class="forminput"
           placeholder="Explain your idea, how it works and who it is for..."></textarea>
 
-        <label class="muted">Estimated Investment</label>
-        <input id="ideaInvestment" class="forminput"
+
+        <label class="muted">
+          Estimated Investment
+        </label>
+
+        <input
+          id="ideaInvestment"
+          class="forminput"
           placeholder="e.g. ₹50,000">
 
-        <label class="muted">Your Asking Price</label>
-        <input id="ideaPrice" class="forminput"
+
+        <label class="muted">
+          Your Asking Price
+        </label>
+
+        <input
+          id="ideaPrice"
+          class="forminput"
           placeholder="e.g. ₹499">
 
-        <label class="muted">Contact Email / Phone</label>
-        <input id="ideaContact" class="forminput"
+
+        <label class="muted">
+          Contact Email / Phone
+        </label>
+
+        <input
+          id="ideaContact"
+          class="forminput"
           placeholder="How can Neo-Ideas contact you?">
 
-        <button class="btn wide" onclick="submitIdea()">
+
+        <button
+          class="btn wide"
+          onclick="submitIdea()">
           Submit Idea →
         </button>
+
       </div>
+
     </div>
   </div>
 
-  <div id="profile" class="page">
-    <div class="back" onclick="show('home')">← Back</div>
 
+  <!-- PROFILE -->
+  <div id="profile" class="page">
+
+    <div class="back" onclick="show('home')">
+      ← Back
+    </div>
+
+    <header>
+      <div class="logo">
+        My <span>Profile</span>
+      </div>
+    </header>
 
     <div class="section">
+
       <div class="card">
         <h2>👤 Nicky</h2>
-        <p>Idea creator · Buyer</p>
+        <p class="muted">
+          Idea creator · Buyer
+        </p>
       </div>
 
       <br>
 
       <div class="cards">
-        <div class="card">
-          💡 My Ideas <span style="float:right">›</span>
+
+        <div
+          class="card profile-option"
+          onclick="show('myideas')">
+          💡 My Ideas
+          <span style="float:right">›</span>
         </div>
 
-        <div class="card">
-          🛒 Purchased Ideas <span style="float:right">›</span>
+        <div
+          class="card profile-option"
+          onclick="show('purchased')">
+          🛒 Purchased Ideas
+          <span style="float:right">›</span>
         </div>
 
-        <div class="card" onclick="show('premium')">
-          ♛ Premium <span style="float:right">›</span>
+        <div
+          class="card profile-option"
+          onclick="show('premium')">
+          ♛ Premium
+          <span style="float:right">›</span>
         </div>
+
       </div>
-    </div>
-          </div>
 
-
-  <div class="section">
-    <div class="card">
-      <h2>💡 Submit Your Idea</h2>
-      <p class="muted">
-        Have a practical business idea? Submit it to Neo-Ideas marketplace.
-      </p>
-
-      <label class="muted">Idea Title</label>
-      <input id="ideaTitle" class="forminput"
-        placeholder="e.g. Mobile Car Wash Service">
-
-      <label class="muted">Category</label>
-      <select id="ideaCategory" class="forminput">
-        <option value="">Select category</option>
-        <option>Food</option>
-        <option>Automobile</option>
-        <option>Technology</option>
-        <option>Retail</option>
-        <option>Manufacturing</option>
-        <option>Services</option>
-        <option>Education</option>
-        <option>Agriculture</option>
-        <option>Investment</option>
-      </select>
-
-      <label class="muted">Describe Your Idea</label>
-      <textarea id="ideaDescription" class="forminput"
-        placeholder="Explain your idea, how it works and who it is for..."></textarea>
-
-      <label class="muted">Estimated Investment</label>
-      <input id="ideaInvestment" class="forminput"
-        placeholder="e.g. ₹50,000">
-
-      <label class="muted">Your Asking Price</label>
-      <input id="ideaPrice" class="forminput"
-        placeholder="e.g. ₹499">
-
-      <label class="muted">Contact Email / Phone</label>
-      <input id="ideaContact" class="forminput"
-        placeholder="How can Neo-Ideas contact you?">
-
-      <button class="btn wide" onclick="submitIdea()">
-        Submit Idea →
-      </button>
     </div>
   </div>
-        </div>
-    <div class="back" onclick="show('home')">← Back</div><header><div class="logo">My <span>Profile</span></div></header>
-    <div class="section"><div class="card"><h2>👤 Nicky</h2><p>Idea creator · Buyer</p></div><br><div class="cards"><div class="card">💡 My Ideas <span style="float:right">›</span></div><div class="card">🛒 Purchased Ideas <span style="float:right">›</span></div><div class="card" onclick="show('premium')">♛ Premium <span style="float:right">›</span></div></div></div>
+
+
+  <!-- MY IDEAS -->
+  <div id="myideas" class="page">
+
+    <div class="back" onclick="show('profile')">
+      ← Back
+    </div>
+
+    <header>
+      <div class="logo">
+        My <span>Ideas</span>
+      </div>
+    </header>
+
+    <div class="section">
+
+      <div class="card">
+        <h2>💡 Your Ideas</h2>
+
+        <p class="muted">
+          Ideas submitted from this device will appear here.
+        </p>
+
+        <div id="myIdeasList"></div>
+      </div>
+
+    </div>
   </div>
+
+
+  <!-- PURCHASED -->
+  <div id="purchased" class="page">
+
+    <div class="back" onclick="show('profile')">
+      ← Back
+    </div>
+
+    <header>
+      <div class="logo">
+        Purchased <span>Ideas</span>
+      </div>
+    </header>
+
+    <div class="section">
+
+      <div class="card">
+
+        <h2>🛒 Purchased Ideas</h2>
+
+        <p class="muted">
+          Your purchased ideas will appear here.
+        </p>
+
+        <button
+          class="btn wide"
+          onclick="show('explore')">
+          Explore Ideas
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
-<div class="bottom"><div class="nav active" onclick="show('home')"><span>⌂</span>Home</div><div class="nav" onclick="show('explore')"><span>⌕</span>Explore</div><div class="nav" onclick="show('sell')"><span>＋</span>Sell Idea</div><div class="nav" onclick="show('premium')"><span>♛</span>Premium</div><div class="nav" onclick="show('profile')"><span>◉</span>Profile</div></div>
+
+<!-- BOTTOM NAVIGATION -->
+<div class="bottom">
+
+  <div
+    class="nav active"
+    data-page="home"
+    onclick="show('home')">
+    <span>⌂</span>
+    Home
+  </div>
+
+  <div
+    class="nav"
+    data-page="explore"
+    onclick="show('explore')">
+    <span>⌕</span>
+    Explore
+  </div>
+
+  <div
+    class="nav"
+    data-page="sell"
+    onclick="show('sell')">
+    <span>＋</span>
+    Sell Idea
+  </div>
+
+  <div
+    class="nav"
+    data-page="premium"
+    onclick="show('premium')">
+    <span>♛</span>
+    Premium
+  </div>
+
+  <div
+    class="nav"
+    data-page="profile"
+    onclick="show('profile')">
+    <span>◉</span>
+    Profile
+  </div>
+
+</div>
+
+
 <div id="toast" class="toast"></div>
-<script>
-const ideas=[
-{name:'Small Cloud Kitchen Setup',cat:'Food',price:149,inv:'₹1.2L',emoji:'🍔'},
-{name:'Mobile Car Detailing Service',cat:'Automobile',price:199,inv:'₹80K',emoji:'🚗'},
-{name:'Local AI Content Studio',cat:'Technology',price:249,inv:'₹35K',emoji:'🤖'},
-{name:'Healthy Snack Brand',cat:'Food',price:99,inv:'₹60K',emoji:'🥗'},
-{name:'Instagram Growth Service',cat:'Technology',price:79,inv:'₹15K',emoji:'📱'},
-{name:'Organic Farming Business',cat:'Agriculture',price:129,inv:'₹1.8L',emoji:'🌱'}];
 
-function card(i){
-  return `<div class="card" onclick="show('detail')">
-    <div class="cardtop"><span>${i.emoji} ${i.cat}</span><span class="tag">IDEA</span></div>
-    <h3>${i.name}</h3><p>Starting investment: ${i.inv}</p><br>
-    <span class="price">₹${i.price}</span>
-    <span class="muted" style="float:right">View details →</span>
-  </div>`;
-}
-function render(list=ideas){
-  document.getElementById('cards').innerHTML=list.map(card).join('');
-  document.getElementById('homecards').innerHTML=ideas.slice(0,3).map(card).join('');
-}
-function show(id){
-  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  scrollTo(0,0);
-}
-function filter(cat){
-  show('explore');
-  render(ideas.filter(x=>x.cat===cat));
-  const input=document.getElementById('exploreSearch');
-  if(input) input.value=cat;
-}
-function toast(t){
-  let x=document.getElementById('toast');
-  x.textContent=t;x.style.display='block';
-  setTimeout(()=>x.style.display='none',2200);
-}
-function buy(){toast('Demo checkout — payment gateway can be connected next.')}
-function subscribe(){toast('Demo subscription — payment gateway can be connected next.')}
-function submitIdea(){
 
-  const title=document.getElementById('ideaTitle').value.trim();
-  const category=document.getElementById('ideaCategory').value;
-  const description=document.getElementById('ideaDescription').value.trim();
-  const investment=document.getElementById('ideaInvestment').value.trim();
-  const price=document.getElementById('ideaPrice').value.trim();
-  const contact=document.getElementById('ideaContact').value.trim();
-
-  if(!title || !category || !description || !investment || !price || !contact){
-    toast('Please fill all fields');
-    return;
-  }
-
-  const idea={
-    id:'NI-'+Date.now(),
-    title,
-    category,
-    description,
-    investment,
-    price,
-    contact,
-    submittedAt:new Date().toISOString()
-  };
-
-  localStorage.setItem('neoIdea_'+idea.id,JSON.stringify(idea));
-
-  document.getElementById('ideaTitle').value='';
-  document.getElementById('ideaCategory').value='';
-  document.getElementById('ideaDescription').value='';
-  document.getElementById('ideaInvestment').value='';
-  document.getElementById('ideaPrice').value='';
-  document.getElementById('ideaContact').value='';
-
-  toast('Idea submitted successfully 🚀');
-
-  setTimeout(()=>{
-    show('home');
-  },1500);
-  }
-function searchIdeas(value){
-  const q=value.trim().toLowerCase();
-  const list=!q ? ideas : ideas.filter(x=>
-    `${x.name} ${x.cat} ${x.inv}`.toLowerCase().includes(q)
-  );
-  render(list);
-}
-
-document.getElementById('homeSearch')?.addEventListener('input', e=>{
-  searchIdeas(e.target.value);
-});
-document.getElementById('exploreSearch')?.addEventListener('input', e=>{
-  searchIdeas(e.target.value);
-});
-
-let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt', e=>{
-  e.preventDefault();
-  deferredPrompt=e;
-  const btn=document.getElementById('installBtn');
-  if(btn) btn.style.display='block';
-});
-document.getElementById('installBtn')?.addEventListener('click', async ()=>{
-  if(!deferredPrompt){ toast('Use your browser menu → Add to Home screen'); return; }
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt=null;
-  document.getElementById('installBtn').style.display='none';
-});
-window.addEventListener('appinstalled', ()=>{
-  const btn=document.getElementById('installBtn');
-  if(btn) btn.style.display='none';
-  toast('Neo-Ideas installed successfully 🚀');
-});
-
-if('serviceWorker' in navigator){
-  window.addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
-}
-render();<!-- Firebase -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
+
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyC6KPzRqNHHgtr5FW0TI3A7TjmGTbhARsI",
-  authDomain: "neo-ideas.firebaseapp.com",
-  projectId: "neo-ideas",
-  storageBucket: "neo-ideas.firebasestorage.app",
-  messagingSenderId: "886685449543",
-  appId: "1:886685449543:web:89b14aede5e56b570d2062",
-  measurementId: "G-X79F34QT4S"
-};
+/* =========================
+   IDEAS DATA
+========================= */
 
-firebase.initializeApp(firebaseConfig);
+const ideas = [
+  {
+    name:'Small Cloud Kitchen Setup',
+    cat:'Food',
+    price:149,
+    inv:'₹1.2L',
+    emoji:'🍔'
+  },
+  {
+    name:'Mobile Car Detailing Service',
+    cat:'Automobile',
+    price:199,
+    inv:'₹80K',
+    emoji:'🚗'
+  },
+  {
+    name:'Local AI Content Studio',
+    cat:'Technology',
+    price:249,
+    inv:'₹35K',
+    emoji:'🤖'
+  },
+  {
+    name:'Healthy Snack Brand',
+    cat:'Food',
+    price:99,
+    inv:'₹60K',
+    emoji:'🥗'
+  },
+  {
+    name:'Instagram Growth Service',
+    cat:'Technology',
+    price:79,
+    inv:'₹15K',
+    emoji:'📱'
+  },
+  {
+    name:'Organic Farming Business',
+    cat:'Agriculture',
+    price:129,
+    inv:'₹1.8L',
+    emoji:'🌱'
+  }
+];
 
-const auth = firebase.auth();
-const db = firebase.firestore();
-</script>
-</script>
-</body></html>
+
+/* =========================
+   CARD
+========================= */
+
+function card(i){
+
+  return `
+    <div class="card clickable" onclick="show('detail')">
+
+      <div class="cardtop">
+        <span>${i.emoji} ${i.cat}</span>
+        <span class="tag">IDEA</span>
+      </div>
+
+      <h3>${i.name}</h3>
+
+      <p>
+        Starting investment: ${i.inv}
+      </p>
+
+      <br>
+
+      <span class="price">
+        ₹${i.price}
+      </span>
+
+      <span
+        class="muted"
+        style="float:right">
+        View details →
+      </span>
+
+    </div>
+  `;
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function render(list = ideas){
+
+  const cards = document.getElementById('cards');
+  const homecards = document.getElementById('homecards');
+
+  if(cards){
+    cards.innerHTML = list.map(card).join('');
+  }
+
+  if(homecards){
+    homecards.innerHTML =
+      ideas.slice(0,3).map(card).join('');
+  }
+}
+
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function show(id){
+
+  const target = document.getElementById(id);
+
+  if(!target){
+    console.error('Page not found:',id);
+    return;
+  }
+
+  document
+    .querySelectorAll('.page')
+    .forEach(page=>{
+      page.classList.remove('active');
+    });
+
+  target.classList.add('active');
+
+  document
+    .querySelectorAll('.nav')
+    .forEach(nav=>{
+      nav.classList.remove('active');
+
+      if(nav.dataset.page === id){
+        nav.classList.add('active');
+      }
+    });
+
+  if(id === 'myideas'){
+    renderMyIdeas();
+  }
+
+  window.scrollTo(0,0);
+}
+
+
+/* =========================
+   CATEGORY FILTER
+========================= */
+
+function filter(cat){
+
+  show('explore');
+
+  const filtered =
+    ideas.filter(x => x.cat === cat);
+
+  render(filtered);
+
+  const input =
+    document.getElementById('exploreSearch');
+
+  if(input){
+    input.value = cat;
+  }
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+function toast(message){
+
+  const x =
+    document.getElementById('toast');
+
+  if(!x) return;
+
+  x.textContent = message;
+  x.style.display = 'block';
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer =
+    setTimeout(()=>{
+      x.style.display = 'none';
+    },2200);
+}
+
+
+/* =========================
+   BUY / SUBSCRIBE
+========================= */
+
+function buy(){
+
+  toast(
+    'Demo checkout — payment gateway can be connected next.'
+  );
+}
+
+
+function subscribe(){
+
+  toast(
+    'Demo subscription — payment gateway can be connected next.'
+  );
+}
+
+
+/* =========================
+   SUBMIT IDEA
+========================= */
+
+function submitIdea(){
+
+  const title =
+    document.getElementById('ideaTitle').value.trim();
+
+  const category =
+    document.getElementById('ideaCategory').value;
+
+  const description =
+    document.getElementById('ideaDescription').v
