@@ -892,10 +892,224 @@
 <!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></s
 
-<script>
-function submitIdea(){
+  
+   <script>
+
+/* =========================
+   IDEAS DATA
+========================= */
+
+const ideas = [
+  {
+    name: 'Small Cloud Kitchen Setup',
+    cat: 'Food',
+    price: 149,
+    inv: '₹1.2L',
+    emoji: '🍔'
+  },
+  {
+    name: 'Mobile Car Detailing Service',
+    cat: 'Automobile',
+    price: 199,
+    inv: '₹80K',
+    emoji: '🚗'
+  },
+  {
+    name: 'Local AI Content Studio',
+    cat: 'Technology',
+    price: 249,
+    inv: '₹35K',
+    emoji: '🤖'
+  },
+  {
+    name: 'Healthy Snack Brand',
+    cat: 'Food',
+    price: 99,
+    inv: '₹60K',
+    emoji: '🥗'
+  },
+  {
+    name: 'Instagram Growth Service',
+    cat: 'Technology',
+    price: 79,
+    inv: '₹15K',
+    emoji: '📱'
+  },
+  {
+    name: 'Organic Farming Business',
+    cat: 'Agriculture',
+    price: 129,
+    inv: '₹1.8L',
+    emoji: '🌱'
+  }
+];
+
+
+/* =========================
+   CARD
+========================= */
+
+function card(i) {
+
+  return `
+    <div class="card clickable" onclick="show('detail')">
+
+      <div class="cardtop">
+        <span>${i.emoji} ${i.cat}</span>
+        <span class="tag">IDEA</span>
+      </div>
+
+      <h3>${i.name}</h3>
+
+      <p>Starting investment: ${i.inv}</p>
+
+      <br>
+
+      <span class="price">₹${i.price}</span>
+
+      <span class="muted" style="float:right">
+        View details →
+      </span>
+
+    </div>
+  `;
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function render(list = ideas) {
+
+  const cards = document.getElementById('cards');
+  const homecards = document.getElementById('homecards');
+
+  if (cards) {
+    cards.innerHTML = list.map(card).join('');
+  }
+
+  if (homecards) {
+    homecards.innerHTML =
+      ideas.slice(0, 3).map(card).join('');
+  }
+}
+
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function show(id) {
+
+  const target = document.getElementById(id);
+
+  if (!target) {
+    console.error('Page not found:', id);
+    return;
+  }
+
+  document.querySelectorAll('.page').forEach(page => {
+    page.classList.remove('active');
+  });
+
+  target.classList.add('active');
+
+  document.querySelectorAll('.nav').forEach(nav => {
+
+    nav.classList.remove('active');
+
+    if (nav.dataset.page === id) {
+      nav.classList.add('active');
+    }
+
+  });
+
+  if (id === 'myideas') {
+    renderMyIdeas();
+  }
+
+  window.scrollTo(0, 0);
+}
+
+
+/* =========================
+   CATEGORY FILTER
+========================= */
+
+function filter(cat) {
+
+  show('explore');
+
+  const filtered =
+    ideas.filter(x => x.cat === cat);
+
+  render(filtered);
+
+  const input =
+    document.getElementById('exploreSearch');
+
+  if (input) {
+    input.value = cat;
+  }
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+function toast(message) {
+
+  const x =
+    document.getElementById('toast');
+
+  if (!x) return;
+
+  x.textContent = message;
+  x.style.display = 'block';
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(() => {
+    x.style.display = 'none';
+  }, 2200);
+}
+
+
+/* =========================
+   BUY
+========================= */
+
+function buy() {
+
+  toast(
+    'Demo checkout — payment gateway can be connected next.'
+  );
+
+}
+
+
+/* =========================
+   SUBSCRIBE
+========================= */
+
+function subscribe() {
+
+  toast(
+    'Demo subscription — payment gateway can be connected next.'
+  );
+
+}
+
+
+/* =========================
+   SUBMIT IDEA
+========================= */
+
+function submitIdea() {
 
   const title =
     document.getElementById('ideaTitle').value.trim();
@@ -915,43 +1129,78 @@ function submitIdea(){
   const contact =
     document.getElementById('ideaContact').value.trim();
 
-  if(!title || !category || !description || !investment || !price || !contact){
+
+  if (
+    !title ||
+    !category ||
+    !description ||
+    !investment ||
+    !price ||
+    !contact
+  ) {
+
     toast('Please fill all fields.');
+
     return;
   }
 
+
   const idea = {
-    title,
-    category,
-    description,
-    investment,
-    price,
-    contact,
+
+    title: title,
+
+    category: category,
+
+    description: description,
+
+    investment: investment,
+
+    price: price,
+
+    contact: contact,
+
     date: new Date().toLocaleString()
+
   };
 
+
   const saved =
-    JSON.parse(localStorage.getItem('neoIdeas') || '[]');
+    JSON.parse(
+      localStorage.getItem('neoIdeas') || '[]'
+    );
+
 
   saved.push(idea);
+
 
   localStorage.setItem(
     'neoIdeas',
     JSON.stringify(saved)
   );
 
+
   document.getElementById('ideaTitle').value = '';
+
   document.getElementById('ideaCategory').value = '';
+
   document.getElementById('ideaDescription').value = '';
+
   document.getElementById('ideaInvestment').value = '';
+
   document.getElementById('ideaPrice').value = '';
+
   document.getElementById('ideaContact').value = '';
+
 
   toast('Your idea has been submitted!');
 
-  setTimeout(()=>{
+
+  setTimeout(() => {
+
     show('myideas');
-  },800);
+
+  }, 800);
+
 }
 
 
@@ -959,202 +1208,15 @@ function submitIdea(){
    MY IDEAS
 ========================= */
 
-function renderMyIdeas(){
+function renderMyIdeas() {
 
   const box =
     document.getElementById('myIdeasList');
 
-  if(!box) return;
+  if (!box) return;
+
 
   const saved =
-    JSON.parse(localStorage.getItem('neoIdeas') || '[]');
-
-  if(saved.length === 0){
-
-    box.innerHTML = `
-      <div class="card" style="margin-top:12px">
-        <p class="muted">
-          No ideas submitted yet.
-        </p>
-      </div>
-    `;
-
-    return;
-  }
-
-  box.innerHTML = saved.map((idea,index)=>`
-
-    <div class="card" style="margin-top:12px">
-
-      <div class="cardtop">
-        <span class="tag">${idea.category}</span>
-        <span class="muted">#${index + 1}</span>
-      </div>
-
-      <h3>${escapeHTML(idea.title)}</h3>
-
-      <p>
-        ${escapeHTML(idea.description)}
-      </p>
-
-      <br>
-
-      <p>
-        <b>Investment:</b>
-        ${escapeHTML(idea.investment)}
-      </p>
-
-      <p>
-        <b>Asking price:</b>
-        ${escapeHTML(idea.price)}
-      </p>
-
-      <p>
-        <b>Contact:</b>
-        ${escapeHTML(idea.contact)}
-      </p>
-
-      <p class="muted" style="margin-top:10px">
-        Submitted: ${escapeHTML(idea.date)}
-      </p>
-
-    </div>
-
-  `).join('');
-}
-
-
-/* =========================
-   SAFE TEXT
-========================= */
-
-function escapeHTML(value){
-
-  return String(value)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
-
-}
-
-
-/* =========================
-   SEARCH
-========================= */
-
-function searchIdeas(value){
-
-  const q =
-    value.toLowerCase().trim();
-
-  if(!q){
-    render(ideas);
-    return;
-  }
-
-  const filtered =
-    ideas.filter(i =>
-      i.name.toLowerCase().includes(q) ||
-      i.cat.toLowerCase().includes(q)
-    );
-
-  render(filtered);
-}
-
-
-/* =========================
-   SEARCH LISTENERS
-========================= */
-
-document.addEventListener('DOMContentLoaded',()=>{
-
-  render();
-
-  const homeSearch =
-    document.getElementById('homeSearch');
-
-  const exploreSearch =
-    document.getElementById('exploreSearch');
-
-  if(homeSearch){
-    homeSearch.addEventListener(
-      'input',
-      e => searchIdeas(e.target.value)
-    );
-  }
-
-  if(exploreSearch){
-    exploreSearch.addEventListener(
-      'input',
-      e => searchIdeas(e.target.value)
-    );
-  }
-
-});
-
-
-/* =========================
-   PWA INSTALL
-========================= */
-
-let deferredPrompt = null;
-
-window.addEventListener(
-  'beforeinstallprompt',
-  event => {
-
-    event.preventDefault();
-
-    deferredPrompt = event;
-
-    const installBtn =
-      document.getElementById('installBtn');
-
-    if(installBtn){
-      installBtn.style.display = 'block';
-    }
-
-  }
-);
-
-
-const installBtn =
-  document.getElementById('installBtn');
-
-if(installBtn){
-
-  installBtn.addEventListener(
-    'click',
-    async()=>{
-
-      if(!deferredPrompt){
-
-        toast('Install option is not available right now.');
-
-        return;
-      }
-
-      deferredPrompt.prompt();
-
-      await deferredPrompt.userChoice;
-
-      deferredPrompt = null;
-
-      installBtn.style.display = 'none';
-
-    }
-  );
-
-}
-
-
-/* =========================
-   START APP
-========================= */
-
-render();
-</script>
-      
-  
+    JSON.parse(
+      localStorage.getItem('neoIdeas') || '[]'
+    '
