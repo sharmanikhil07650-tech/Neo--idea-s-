@@ -945,7 +945,414 @@ const ideas = [
     emoji: '🌱'
   }
 ];
+/* =========================
+   FIREBASE LOGIN SYSTEM
+========================= */
 
+const firebaseConfig = {
+  apiKey: "AIzaSyC6KPzRqNHHgtr5FW0TI3A7TjmGTbhARsI",
+  authDomain: "neo-ideas.firebaseapp.com",
+  projectId: "neo-ideas",
+  storageBucket: "neo-ideas.firebasestorage.app",
+  messagingSenderId: "886685449543",
+  appId: "1:886685449543:web:782fe26a66d38c4f0d2062",
+  measurementId: "G-504R99YHN7"
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const auth = firebase.auth();
+
+
+/* =========================
+   LOGIN SCREEN
+========================= */
+
+const authScreen = document.createElement('div');
+
+authScreen.id = 'authScreen';
+
+authScreen.innerHTML = `
+  <div class="authBox">
+
+    <div class="authLogo">
+      💡 Neo-<span>Ideas</span>
+    </div>
+
+    <h1 id="authTitle">Welcome Back</h1>
+
+    <p class="authSub" id="authSub">
+      Login to continue to Neo-Ideas
+    </p>
+
+    <div id="nameField" style="display:none;">
+      <input
+        id="authName"
+        class="authInput"
+        placeholder="Your Name"
+        autocomplete="name">
+    </div>
+
+    <input
+      id="authEmail"
+      class="authInput"
+      type="email"
+      placeholder="Email"
+      autocomplete="email">
+
+    <input
+      id="authPassword"
+      class="authInput"
+      type="password"
+      placeholder="Password"
+      autocomplete="current-password">
+
+    <button
+      id="authBtn"
+      class="btn authBtn">
+      Login
+    </button>
+
+    <p id="authError" class="authError"></p>
+
+    <p class="authSwitch">
+      <span id="switchText">Don't have an account?</span>
+      <button id="switchBtn" class="switchBtn">
+        Create Account
+      </button>
+    </p>
+
+  </div>
+`;
+
+document.body.prepend(authScreen);
+
+
+/* =========================
+   AUTH CSS
+========================= */
+
+const authStyle = document.createElement('style');
+
+authStyle.textContent = `
+  #authScreen {
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:
+      radial-gradient(circle at 80% 0,#15344a 0,#06111b 40%,#020910 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    overflow:auto;
+  }
+
+  .authBox {
+    width:100%;
+    max-width:390px;
+    background:#0b1b29;
+    border:1px solid #1d3447;
+    border-radius:24px;
+    padding:28px 22px;
+    box-shadow:0 20px 60px #0009;
+  }
+
+  .authLogo {
+    text-align:center;
+    font-size:26px;
+    font-weight:900;
+    margin-bottom:25px;
+  }
+
+  .authLogo span {
+    color:#f6c64b;
+  }
+
+  .authBox h1 {
+    text-align:center;
+    margin:0 0 8px;
+    font-size:27px;
+  }
+
+  .authSub {
+    text-align:center;
+    color:#91a3b4;
+    font-size:13px;
+    margin:0 0 22px;
+  }
+
+  .authInput {
+    width:100%;
+    padding:14px;
+    margin-bottom:12px;
+    background:#081724;
+    color:#f7f9fb;
+    border:1px solid #1d3447;
+    border-radius:12px;
+    outline:none;
+    font:inherit;
+  }
+
+  .authInput:focus {
+    border-color:#f6c64b;
+  }
+
+  .authBtn {
+    width:100%;
+    margin-top:5px;
+  }
+
+  .authError {
+    color:#ff7777;
+    text-align:center;
+    font-size:12px;
+    min-height:18px;
+    margin:12px 0 5px;
+  }
+
+  .authSwitch {
+    text-align:center;
+    color:#91a3b4;
+    font-size:13px;
+    margin-top:20px;
+  }
+
+  .switchBtn {
+    background:none;
+    border:0;
+    color:#f6c64b;
+    font-weight:800;
+    cursor:pointer;
+    font-size:13px;
+  }
+`;
+
+document.head.appendChild(authStyle);
+
+
+/* =========================
+   LOGIN / SIGNUP LOGIC
+========================= */
+
+let signupMode = false;
+
+const authTitle = document.getElementById('authTitle');
+const authSub = document.getElementById('authSub');
+const authBtn = document.getElementById('authBtn');
+const switchBtn = document.getElementById('switchBtn');
+const switchText = document.getElementById('switchText');
+const nameField = document.getElementById('nameField');
+const authName = document.getElementById('authName');
+const authEmail = document.getElementById('authEmail');
+const authPassword = document.getElementById('authPassword');
+const authError = document.getElementById('authError');
+
+
+switchBtn.onclick = function() {
+
+  signupMode = !signupMode;
+
+  authError.textContent = '';
+
+  if (signupMode) {
+
+    authTitle.textContent = 'Create Account';
+
+    authSub.textContent =
+      'Create your Neo-Ideas account';
+
+    nameField.style.display = 'block';
+
+    authBtn.textContent = 'Create Account';
+
+    switchText.textContent =
+      'Already have an account?';
+
+    switchBtn.textContent = 'Login';
+
+  } else {
+
+    authTitle.textContent = 'Welcome Back';
+
+    authSub.textContent =
+      'Login to continue to Neo-Ideas';
+
+    nameField.style.display = 'none';
+
+    authBtn.textContent = 'Login';
+
+    switchText.textContent =
+      "Don't have an account?";
+
+    switchBtn.textContent =
+      'Create Account';
+  }
+};
+
+
+authBtn.onclick = async function() {
+
+  const email =
+    authEmail.value.trim();
+
+  const password =
+    authPassword.value;
+
+  authError.textContent = '';
+
+  if (signupMode) {
+
+    const name =
+      authName.value.trim();
+
+    if (!name || !email || !password) {
+
+      authError.textContent =
+        'Please fill all fields.';
+
+      return;
+    }
+
+    if (password.length < 6) {
+
+      authError.textContent =
+        'Password must be at least 6 characters.';
+
+      return;
+    }
+
+    authBtn.disabled = true;
+    authBtn.textContent = 'Creating...';
+
+    try {
+
+      const result =
+        await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+
+      await result.user.updateProfile({
+        displayName: name
+      });
+
+      localStorage.setItem(
+        'neoProfileName',
+        name
+      );
+
+    } catch (error) {
+
+      authError.textContent =
+        firebaseAuthError(error);
+
+    }
+
+    authBtn.disabled = false;
+    authBtn.textContent = 'Create Account';
+
+  } else {
+
+    if (!email || !password) {
+
+      authError.textContent =
+        'Enter email and password.';
+
+      return;
+    }
+
+    authBtn.disabled = true;
+    authBtn.textContent = 'Logging in...';
+
+    try {
+
+      await auth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+
+    } catch (error) {
+
+      authError.textContent =
+        firebaseAuthError(error);
+
+    }
+
+    authBtn.disabled = false;
+    authBtn.textContent = 'Login';
+  }
+};
+
+
+/* =========================
+   FIREBASE ERROR MESSAGES
+========================= */
+
+function firebaseAuthError(error) {
+
+  switch (error.code) {
+
+    case 'auth/email-already-in-use':
+      return 'This email is already registered.';
+
+    case 'auth/invalid-email':
+      return 'Please enter a valid email.';
+
+    case 'auth/user-not-found':
+      return 'No account found with this email.';
+
+    case 'auth/wrong-password':
+      return 'Incorrect password.';
+
+    case 'auth/invalid-credential':
+      return 'Email or password is incorrect.';
+
+    case 'auth/weak-password':
+      return 'Password must be at least 6 characters.';
+
+    default:
+      return error.message || 'Something went wrong.';
+  }
+}
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+auth.onAuthStateChanged(function(user) {
+
+  if (user) {
+
+    authScreen.style.display = 'none';
+
+    const profileName =
+      user.displayName ||
+      localStorage.getItem('neoProfileName') ||
+      'User';
+
+    localStorage.setItem(
+      'neoProfileName',
+      profileName
+    );
+
+    const profileTitle =
+      document.querySelector('#profile h2');
+
+    if (profileTitle) {
+      profileTitle.textContent =
+        '👤 ' + profileName;
+    }
+
+  } else {
+
+    authScreen.style.display = 'flex';
+  }
+
+});
 
 /* =========================
    CARD
